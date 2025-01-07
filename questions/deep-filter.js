@@ -15,7 +15,7 @@ function filter(collection, callback) {
 			let current = collection[key];
 
 			// Check if the key is an object or non-primitive value
-			if (Object.prototype.toString.call(current) === '[object]') {
+			if (Object.prototype.toString.call(current) === '[object Object]') {
 				let nestedObj = {};
 
 				filterWrapper(nestedObj, current);

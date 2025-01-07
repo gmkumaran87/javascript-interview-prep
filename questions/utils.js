@@ -13,8 +13,8 @@ export const debounce = (callback, delay) => {
 export const myThrottle = (func, delay) => {
   let last = 0;
 
-  return function () {
-    let args = arguments;
+  return function (...args) {
+    // let args = arguments;
     let now = new Date().getTime(); // current time
     if (now - last < delay) return;
     last = now;
