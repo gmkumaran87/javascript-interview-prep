@@ -24,4 +24,17 @@ const obj = {
 	},
 };
 
-console.log('Flattened obj', flatten(obj)); // Output: a.b,a.c.d,a.c.e
+// console.log('Flattened obj', flatten(obj)); // Output: a.b,a.c.d,a.c.e
+
+function fibonacci(n, cache = {}) {
+	console.log(n, cache);
+	if (cache[n] !== undefined) return cache[n];
+
+	if (n === 0) return 0;
+	if (n === 1) return 1;
+
+	cache[n] = fibonacci(n - 1, cache) + fibonacci(n - 2, cache);
+	return cache[n];
+}
+
+console.log('Result', fibonacci(500, {}));
