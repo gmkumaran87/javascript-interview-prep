@@ -16,7 +16,7 @@ Examples: */
 console.log(1 + 2); // Output: 3 (number addition)
 console.log('Hello ' + 3); // Output: "Hello 3" (string concatenation)
 console.log(1 + '3'); // Output: "13" (string concatenation)
-
+console.log('Adding/Con', 1 + +'2' + 3);
 /*Edge Cases
 String Concatenation:
 If one operand is a string, the other operand is converted to a string:

@@ -25,3 +25,15 @@ x = {
 		return this.value++;
 	},
 };
+
+function checkAge(data) {
+	if (data == { age: 2 }) {
+		console.log('You are in adult');
+	} else if (data === { age: 2 }) {
+		console.log('Second console');
+	} else {
+		console.log('Not EQUAL');
+	}
+}
+
+checkAge({ age: 2 });

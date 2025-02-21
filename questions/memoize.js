@@ -9,7 +9,7 @@ function memoized(func) {
 
 	return function () {
 		const args = JSON.stringify(arguments);
-
+		console.log('args', args, arguments);
 		if (cache[args]) {
 			return cache[args];
 		} else {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { asyncTask, createChunk } from './util';
+import axios from 'axios';
 
 const promises = [
 	asyncTask(1),
@@ -19,30 +20,50 @@ const promises = [
 	asyncTask(15),
 	asyncTask(16),
 ];
+
+const imageUrls = [
+	'https://picsum.photos/200?random=1',
+	'https://picsum.photos/200?random=2',
+	'https://picsum.photos/200?random=3',
+	'https://picsum.photos/200?random=4',
+	'https://picsum.photos/200?random=5',
+	'https://picsum.photos/200?random=6',
+	'https://picsum.photos/200?random=7',
+	'https://picsum.photos/200?random=8',
+	'https://picsum.photos/200?random=9',
+	'https://picsum.photos/200?random=10',
+];
+
 const BATCH_COUNT = 4;
 function App() {
 	const [count, setCount] = useState(0);
 
 	const asynCalls = async (promises) => {
+		// console.log('promises', promises);
 		try {
-			const result = await Promise.all(promises);
-			console.log('Api response', result);
+			const result = await Promise.all(promises.map((url) => axios.get(url, { responseType: 'blob' })));
+
+			const newImages = result.map((res) => URL.createObjectURL(res.data));
+
+			console.log('Api response', newImages);
 		} catch (error) {
 			console.log('Api error', error);
 		} finally {
-			// setCount(0);
+			setCount((prev) => prev + 1);
 		}
 	};
 
 	useEffect(() => {
-		const promiseArr = createChunk(promises, BATCH_COUNT);
+		if (count * BATCH_COUNT >= imageUrls.length) return;
+		const promiseArr = createChunk(imageUrls, BATCH_COUNT);
 
-		promiseArr.forEach((promises) => {
-			setTimeout(() => {
-				asynCalls(promises);
-			}, 1500);
-		});
+		const timer = setTimeout(() => {
+			asynCalls(promiseArr[count]);
+		}, 1500);
 
+		console.log('Finished batch', count);
+
+		return () => clearTimeout(timer);
 		// console.log('PromiseArrays', promiseArr);
 	}, [count]);
 
